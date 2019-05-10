@@ -12,7 +12,7 @@ use ink_core::{
 use ink_lang::contract;
 
 contract! {
-    /// @dev The storage items for a typical ERC20 token implementation.
+    /// @dev The storage items for a typical ERC20 token implementation.  
     struct Erc20 {
         balances: storage::HashMap<AccountId, Balance>,
         allowances: storage::HashMap<(AccountId, AccountId), Balance>,
@@ -23,7 +23,7 @@ contract! {
     event Transfer { from: Option<AccountId>, to: Option<AccountId>, value: Balance }
 
     impl Deploy for Erc20 {
-        /// @dev Same as Constructor in Solidity
+        /// @dev Same as Constructor in Solidity  
         fn deploy(&mut self, init_value: Balance) {
             env.println(&format!("Erc20::deploy(caller = {:?}, init_value = {:?})", env.caller(), init_value));
             self.total_supply.set(init_value);
@@ -33,38 +33,38 @@ contract! {
     }
 
     impl Erc20 {
-        /// @dev Returns the total number of tokens in existence.
+        /// @dev Returns the total number of tokens in existence.  
         pub(external) fn total_supply(&self) -> Balance {
             let total_supply = *self.total_supply;
             env.println(&format!("Erc20::total_supply = {:?}", total_supply));
             total_supply
         }
 
-        /// @dev Returns the balance of the given address.
-        /// @param owner The address to query the the balance of.
+        /// @dev Returns the balance of the given address.  
+        /// @param owner The address to query the the balance of.  
         pub(external) fn balance_of(&self, owner: AccountId) -> Balance {
             self.balance_of_or_zero(&owner)
         }
 
-        /// @dev Returns the amount of tokens that an owner allowed to a spender.
-        /// @param owner The address which owns the funds.
-        /// @param spender The address which will spend the funds.
+        /// @dev Returns the amount of tokens that an owner allowed to a spender.  
+        /// @param owner The address which owns the funds.  
+        /// @param spender The address which will spend the funds.  
         pub(external) fn allowance(&self, owner: AccountId, spender: AccountId) -> Balance {
             self.allowance_or_zero(&owner, &spender)
         }
 
-        /// @dev Transfers token from the sender to the `to` address.
-        /// @param to The address which you want to transfer to.
-        /// @param value the amount of tokens to be transferred
+        /// @dev Transfers token from the sender to the `to` address.  
+        /// @param to The address which you want to transfer to.  
+        /// @param value the amount of tokens to be transferred.  
         pub(external) fn transfer(&mut self, to: AccountId, value: Balance) -> bool {
             env.println(&format!("Erc20::transfer(to = {:?}, value = {:?})", to, value));
             self.transfer_impl(env, env.caller(), to, value)
         }
 
-        /// @dev Approve the passed address to spend the specified amount of tokens
-        /// on the behalf of the message's sender.
-        /// @param spender The address which will spend the funds.
-        /// @param value The amount of tokens to be spent.
+        /// @dev Approve the passed address to spend the specified amount of tokens  
+        /// on the behalf of the message's sender.  
+        /// @param spender The address which will spend the funds.  
+        /// @param value The amount of tokens to be spent.  
         pub(external) fn approve(&mut self, spender: AccountId, value: Balance) -> bool {
             env.println(&format!(
                 "Erc20::approve(spender = {:?}, value = {:?})",
@@ -76,10 +76,10 @@ contract! {
             true
         }
 
-        /// @dev Transfer tokens from one address to another.
-        /// @param from The address which you want to send tokens from.
-        /// @param to The address which you want to transfer to.
-        /// @param value the amount of tokens to be transferred.
+        /// @dev Transfer tokens from one address to another.  
+        /// @param from The address which you want to send tokens from.  
+        /// @param to The address which you want to transfer to.  
+        /// @param value the amount of tokens to be transferred.  
         pub(external) fn transfer_from(&mut self, from: AccountId, to: AccountId, value: Balance) -> bool {
             env.println(&format!(
                 "Erc20::transfer_from(from: {:?}, to = {:?}, value = {:?})",
@@ -90,7 +90,7 @@ contract! {
     }
 
     impl Erc20 {
-        /// @dev Returns the allowance or 0 of there is no allowance.
+        /// @dev Returns the allowance or 0 of there is no allowance.  
         fn allowance_or_zero(&self, from: &AccountId, to: &AccountId) -> Balance {
             let allowance = self.allowances.get(&(*from, *to)).unwrap_or(&0);
             env::println(&format!(
@@ -100,7 +100,7 @@ contract! {
             *allowance
         }
 
-        /// @dev Returns the balance of the address or 0 if there is no balance.
+        /// @dev Returns the balance of the address or 0 if there is no balance.  
         fn balance_of_or_zero(&self, of: &AccountId) -> Balance {
             let balance = self.balances.get(of).unwrap_or(&0);
             env::println(&format!(
@@ -110,7 +110,7 @@ contract! {
             *balance
         }
 
-        /// @dev Transfers token from a specified address to another address.
+        /// @dev Transfers token from a specified address to another address.  
         fn transfer_impl(
             &mut self,
             env: &ink_model::EnvHandler,
@@ -132,9 +132,9 @@ contract! {
             true
         }
 
-        /// @dev Decreases the allowance and returns if it was successful.
+        /// @dev Decreases the allowance and returns if it was successful.  
         fn try_decrease_allowance(&mut self, env: &ink_model::EnvHandler, from: &AccountId, by: Balance) -> bool {
-            // The owner of the coins doesn't need an allowance.
+            // The owner of the coins doesn't need an allowance.  
             if &env::caller() == from {
                 return true
             }
