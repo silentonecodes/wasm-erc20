@@ -423,7 +423,7 @@ substrate --dev
 
 You should start to see blocks being produced by your node in your terminal.
 
-![Substrate --dev](https://munan.tech/2019/05/10/wasm-erc20/substrate-dev.png)
+![Substrate --dev](images/substrate-dev.png)
 
 You can interact with your node using the Polkadot UI:
 
@@ -452,13 +452,13 @@ With this pattern, contract code like the ERC20 standard can be put on the block
 
 With your Substrate development node running, you can go back to the [Polkadot UI](https://polkadot.js.org/apps/) where you will be able to interact with your blockchain. Remember to set the node to localhost.
 
-![Polkadot UI Settings](https://munan.tech/2019/05/10/wasm-erc20/set_local_node.png)
+![Polkadot UI Settings](images/set_local_node.png)
 
 Open the specially designed **Contracts** section of the UI.
 
 In the **Code** section, select a *deployment account* with some account balance like Ferdie. In *compiled contract WASM*, select the `flipper-pruned.wasm` file we generated. For the *contract ABI*, select the JSON file. Finally, set the *maximum gas allowed* to `500,000` units.
 
-![Contracts code page for deploying Flipper](https://munan.tech/2019/05/10/wasm-erc20/deploy_flipper_page.png)
+![Contracts code page for deploying Flipper](images/deploy_flipper_page.png)
 
 After you press **Deploy** and a new block is formed, an extrinsic event is emitted with `contract.codeStored`. This means that you have successfully stored your WASM contract on your Substrate blockchain!
 
@@ -468,7 +468,7 @@ Like Ethereum, smart contracts exist as an extension of the account system on th
 
 You will notice on the **Contracts** tab there is a new section called **Instance** where we will now create an instance of this smart contract.
 
-![An image of the Contracts Instance Page](https://munan.tech/2019/05/10/wasm-erc20/flipper_instance.png)
+![An image of the Contracts Instance Page](images/flipper_instance.png)
 
 The *code for this contract* is automatically set to the flipper contract you published, but you can imagine if you created multiple contracts, that you would be able to choose from a drop down of options.
 
@@ -478,7 +478,7 @@ To instantiate our contract we just need to give this contract account an *endow
 
 When you press **Instantiate**, you should see a flurry of events appear including the creation of a new account (`balances.NewAccount`) and the instantiation of the contract (`contract.Instantiated`):
 
-![An image of events from instantiation of Flipper](https://munan.tech/2019/05/10/wasm-erc20/flipper_instance_events.png)
+![An image of events from instantiation of Flipper](images/flipper_instance_events.png)
 
 ## Calling Your Contract
 
@@ -490,13 +490,13 @@ If you take a look back at our contract’s `deploy()` function, we set the init
 
 In the **Call** section, set the *message to send* to `get(): bool`. Send a *value*of `1` with the *maximum gas allowed* set to `100,000`.
 
-![An image of the Contracts call page](https://munan.tech/2019/05/10/wasm-erc20/flipper-call-page.png)
+![An image of the Contracts call page](images/flipper-call-page.png)
 
 Contract calls cannot return a value to the outside world. So when you press **Call**, you will get a pretty unsatisfying `system.ExtrinsicSuccess` message. However, ink! provides a debugging tool to enable you to print messages to your node’s terminal.
 
 If we take a look, we can actually see our storage value:
 
-![An image of println in the terminal for Flipper with false](https://munan.tech/2019/05/10/wasm-erc20/flipper-println-false.png)
+![An image of println in the terminal for Flipper with false](images/flipper-println-false.png)
 
 > **Note:** `println` is only allowed on `--dev` chains for debugging purposes. If you try to deploy a contract with `println` on a non-dev chain, it will not succeed.
 
@@ -510,4 +510,4 @@ The alternative *message to send* we can make with the UI is `flip()`. Again, we
 
 If the extrinsic was successful, we should then be able to go back to the `get()` function and see our updated storage:
 
-![An image of println in the terminal for Flipper with true](https://munan.tech/2019/05/10/wasm-erc20/flipper-println-true.png)
+![An image of println in the terminal for Flipper with true](images/flipper-println-true.png)
