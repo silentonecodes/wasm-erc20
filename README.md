@@ -113,7 +113,7 @@ flipper
 |
 +-- Cargo.toml
 |
-+-- .gitignoreCopy to clipboardErrorCopied
++-- .gitignoreCopy
 ```
 
 The ink CLI automatically generates the source code for the "Flipper" contract, which is about the simplest "smart" contract you can build.
